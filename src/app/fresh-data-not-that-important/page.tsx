@@ -1,0 +1,44 @@
+import { DeleteButton } from "@/app/fresh-data-not-that-important/_components/delete-post";
+import { fetchPosts } from "@/app/fresh-data-not-that-important/_lib/queries";
+import Link from "next/link";
+import { Suspense } from "react";
+import { CreatePost } from "./_components/create-post";
+
+export default async function Home() {
+  return (
+    <div className="container flex max-w-2xl flex-col gap-24 px-4 py-16">
+      <Link
+        href="/"
+        className="text-xl text-blue-300 underline hover:text-blue-500"
+      >
+        home
+        {Math.random()}
+      </Link>
+      <Suspense fallback={"Loading..."}>
+        <Posts />
+      </Suspense>
+      <div className="flex flex-col gap-4">
+        <h1 className="text-2xl font-bold">Create a new post</h1>
+        <CreatePost />
+      </div>
+    </div>
+  );
+}
+
+async function Posts() {
+  const posts = await fetchPosts();
+  return (
+    <div className="flex flex-col text-xl">
+      <h1 className="text-2xl font-bold">Posts</h1>
+      {posts.map((post) => (
+        <div
+          className="flex justify-between p-2 hover:bg-gray-800/80"
+          key={post.id}
+        >
+          {post.name}
+          <DeleteButton id={post.id} />
+        </div>
+      ))}
+    </div>
+  );
+}

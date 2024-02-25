@@ -1,0 +1,1 @@
+I created this repo to understand nextjs data fetching, mutations, and cahing mechanisms. More here: https://supreme-coreopsis-e86.notion.site/Nextjs-App-Router-and-its-parts-2e3adc3ca42c41f386081a5284a25e09?pvs=4
