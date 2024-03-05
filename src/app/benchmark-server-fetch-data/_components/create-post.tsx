@@ -1,7 +1,6 @@
 "use client";
 
-import { useCreatePost } from "@/app/fresh-data-important-prefetch-true/_hooks/api";
-import { useZodForm } from "@/app/fresh-data-important-prefetch-true/_utils/zod-form";
+import { useZodForm } from "@/app/fresh-data-not-that-important/_utils/zod-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,9 +11,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createPostSchema, type CreatePost } from "@/server/api/routers/schema";
+import { api } from "@/trpc/react";
+import { useRouter } from "next/navigation";
 
 export function CreatePost() {
-  const { createPost, isLoading } = useCreatePost();
+  const router = useRouter();
+  const { mutate: createPost, isLoading } = api.post.create.useMutation({
+    onSuccess: () => {
+      router.refresh();
+    },
+  });
 
   const form = useZodForm({
     schema: createPostSchema,

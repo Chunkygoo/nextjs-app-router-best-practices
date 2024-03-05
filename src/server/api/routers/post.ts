@@ -9,7 +9,6 @@ export const postRouter = createTRPCRouter({
   create: publicProcedure
     .input(z.object({ name: z.string().min(1) }))
     .mutation(async ({ ctx, input }) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       await ctx.db.insert(posts).values({
         name: input.name,
       });
@@ -18,11 +17,10 @@ export const postRouter = createTRPCRouter({
   delete: publicProcedure
     .input(deletePostSchema)
     .mutation(async ({ ctx, input }) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       await ctx.db.delete(posts).where(eq(posts.id, input.id));
     }),
   getPosts: publicProcedure.query(async ({ ctx }) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     return ctx.db.query.posts.findMany();
   }),
 });

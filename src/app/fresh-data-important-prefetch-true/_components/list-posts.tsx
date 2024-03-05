@@ -16,7 +16,7 @@ function Posts({
 }) {
   const { data: posts } = api.post.getPosts.useQuery(undefined, {
     initialData,
-    refetchOnMount: false,
+    refetchOnMount: true,
   });
   return (
     <div className="flex flex-col text-xl">

@@ -2,16 +2,10 @@ import {
   createPostAction,
   deletePostAction,
 } from "@/app/fresh-data-not-that-important/_lib/mutations";
-import { api } from "@/trpc/react";
 import { useAction } from "next-safe-action/hooks";
 
 export const useCreatePost = () => {
-  const utils = api.useUtils();
-  const { execute, result, status } = useAction(createPostAction, {
-    onSuccess() {
-      void utils.post.getPosts.invalidate();
-    },
-  });
+  const { execute, result, status } = useAction(createPostAction);
   return {
     createPost: execute,
     data: result.data,
@@ -20,12 +14,7 @@ export const useCreatePost = () => {
 };
 
 export const useDeletePost = () => {
-  const utils = api.useUtils();
-  const { execute, status } = useAction(deletePostAction, {
-    onSuccess() {
-      void utils.post.getPosts.invalidate();
-    },
-  });
+  const { execute, status } = useAction(deletePostAction);
   return {
     deletePost: execute,
     isLoading: status === "executing",

@@ -1,9 +1,7 @@
-import Posts from "@/app/fresh-data-important-prefetch-true/_components/list-posts";
-import { fetchPosts } from "@/app/fresh-data-important-prefetch-true/_lib/queries";
-import Fetcher from "@/app/fresh-data-important-prefetch-true/_utils/fetcher";
+import { CreatePost } from "@/app/benchmark-client-fetch-data/_components/create-post";
+import Posts from "@/app/benchmark-client-fetch-data/_components/list-post";
 import Link from "next/link";
 import { Suspense } from "react";
-import { CreatePost } from "./_components/create-post";
 
 export default async function Home() {
   return (
@@ -16,10 +14,7 @@ export default async function Home() {
         {Math.random()}
       </Link>
       <Suspense fallback={"Loading..."}>
-        <Fetcher
-          fetchInitialData={fetchPosts}
-          getComponent={(data) => <Posts initialData={data} />}
-        />
+        <Posts />
       </Suspense>
       <div className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">Create a new post</h1>

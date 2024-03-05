@@ -1,9 +1,14 @@
 "use client";
 
-import { useDeletePost } from "@/app/fresh-data-important-prefetch-true/_hooks/api";
+import { api } from "@/trpc/react";
 
 export function DeleteButton(post: { id: number }) {
-  const { deletePost, isLoading } = useDeletePost();
+  const utils = api.useUtils();
+  const { mutate: deletePost, isLoading } = api.post.delete.useMutation({
+    onSuccess: () => {
+      void utils.post.getPosts.invalidate();
+    },
+  });
   return (
     <button
       className="border p-2 font-bold text-red-300"
